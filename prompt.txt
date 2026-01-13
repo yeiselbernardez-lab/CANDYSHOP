@@ -1,0 +1,184 @@
+App Overview
+
+Build a mobile-first native web application using React Native with Expo that visually simulates people entering and exiting a candy store in the middle of New York City.
+
+The app represents “The Candy Store of New York”, featuring:
+
+A centered layout
+
+A light grey background
+
+A NYC city block with skyscrapers, small storefronts, and a brightly colored candy store in the center
+
+Animated characters that enter the candy store with no candy and exit holding lots of candy when buttons are clicked
+
+The app must be compatible with mobile and web and deployable to Vercel using Expo Web.
+
+Requirements
+Tech Stack
+
+Expo (latest version)
+
+React Native
+
+Expo Web compatibility
+
+React Native Animated or Reanimated
+
+Functional components + hooks
+
+No backend required
+
+Layout
+
+Light grey background
+
+Centered vertical layout
+
+Large, easy-to-read title button centered near the top that reads:
+“THE CANDY STORE OF NEW YORK”
+
+NYC street scene below the title:
+
+Tall NYC skyscrapers in the background
+
+Small stores (bodega, pizza shop, newsstand, etc.)
+
+A large candy store in the center
+
+Candy store has:
+
+Bright colors
+
+Big display windows
+
+A visible door for entering and exiting
+
+Five character buttons underneath the scene
+
+Features
+Character System
+
+There are 5 unique character types:
+
+Black woman with afro hair
+
+White woman with blonde hair
+
+Man with afro and big beard
+
+Little light-skin girl with curly hair
+
+Old man with a very long beard and a cane
+
+Each character has two visual states:
+
+Entering the store → no candy
+
+Exiting the store → holding bags, boxes, or piles of candy
+
+Animation Flow
+
+When a button is clicked:
+
+The selected character appears off-screen on the left
+
+The character walks toward the candy store door
+
+The character disappears briefly (inside the store)
+
+The character reappears exiting the store holding lots of candy
+
+The character walks off toward the right side of the screen
+
+Animations should be smooth and playful, with slight bouncing to show excitement.
+
+Button Behavior
+
+Each character has its own button
+
+Every button click:
+
+Spawns a new instance of that character
+
+Runs the full enter-store → exit-with-candy animation
+
+Clicking the same button multiple times:
+
+Adds more characters
+
+Characters do not replace each other
+
+Multiple characters can be animated at once
+
+State Management
+
+Track click count per character type
+
+Use unique IDs for each animated character
+
+Track animation phase (entering, inside, exiting)
+
+Remove character from state after leaving the screen
+
+API (if needed)
+
+No external APIs required
+
+All animation logic handled locally
+
+Candy visuals can be:
+
+SVGs
+
+Emojis
+
+PNG placeholders
+
+Styling
+
+Use StyleSheet.create
+
+Light grey background (#f2f2f2)
+
+Bright, colorful candy store design
+
+High-contrast buttons
+
+Friendly, playful NYC vibe
+
+Mobile-first, responsive layout
+
+Characters clearly change appearance when exiting with candy
+
+Deployment Readiness
+
+Fully compatible with Expo Web
+
+No platform-specific APIs that break on web
+
+Ready for deployment to Vercel
+
+Include comments or notes explaining:
+
+Running the app locally
+
+Building for web
+
+Deploying with Vercel
+
+Output
+
+Deliver:
+
+Fully working Expo + React Native app
+
+Clean, readable, well-commented code
+
+Organized component structure (e.g. CityScene, CandyStore, Character, CharacterButton)
+
+Smooth enter/exit animations
+
+Multiple characters supported simultaneously
+
+Placeholder assets where necessary
