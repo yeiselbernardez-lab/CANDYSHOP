@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "installCommand": "cd candy-store-nyc && npm ci",
+  "buildCommand": "cd candy-store-nyc && npm run build:web",
+  "outputDirectory": "candy-store-nyc/dist"
+}
+
