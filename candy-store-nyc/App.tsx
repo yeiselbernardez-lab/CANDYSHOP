@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { CityScene } from './src/components/CityScene';
-import { CharacterActor } from './src/components/CharacterActor';
+import { CharactersLayer } from './src/components/CharactersLayer';
 import { CharacterButton } from './src/components/CharacterButton';
 import type { CharacterCounts, CharacterInstance, CharacterPhase, CharacterType } from './src/types';
 import { nextId } from './src/utils/id';
@@ -72,23 +72,13 @@ export default function App() {
           <CityScene sceneWidth={sceneWidth} />
 
           {/* Character lane overlay (absolute positioned so it doesn't affect layout). */}
-          <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-            {instances.map((inst) => {
-              const laneIndex = simpleLaneIndex(inst.id, 3);
-              const laneBottom = 10 + laneIndex * 7; // multiple lanes so characters overlap less
-              return (
-                <CharacterActor
-                  key={inst.id}
-                  instance={inst}
-                  sceneWidth={sceneWidth}
-                  doorStandX={doorStandX}
-                  laneBottom={laneBottom}
-                  onPhaseChange={handlePhaseChange}
-                  onDone={handleDone}
-                />
-              );
-            })}
-          </View>
+          <CharactersLayer
+            instances={instances}
+            sceneWidth={sceneWidth}
+            doorStandX={doorStandX}
+            onPhaseChange={handlePhaseChange}
+            onDone={handleDone}
+          />
         </View>
 
         <View style={[styles.buttonsWrap, { width: sceneWidth }]}>
@@ -112,12 +102,6 @@ export default function App() {
       </ScrollView>
     </View>
   );
-}
-
-function simpleLaneIndex(id: string, lanes: number) {
-  let sum = 0;
-  for (let i = 0; i < id.length; i += 1) sum += id.charCodeAt(i);
-  return sum % lanes;
 }
 
 const styles = StyleSheet.create({
