@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Easing, StyleSheet, View } from 'react-native';
+import { Animated, Easing, Platform, StyleSheet, View } from 'react-native';
 import type { CharacterInstance, CharacterPhase } from '../types';
 import { CharacterSprite } from './CharacterSprite';
 
@@ -27,6 +27,10 @@ export function CharacterActor({ instance, sceneWidth, doorStandX, laneBottom, o
   const startLeftX = -size - 20;
   const endRightX = sceneWidth + size + 20;
 
+  // On web, `useNativeDriver: true` can be unsupported/buggy and cause animations to never start.
+  // Use the JS driver on web, native driver elsewhere.
+  const useNativeDriver = Platform.OS !== 'web';
+
   const x = useRef(new Animated.Value(startLeftX)).current;
   const bounce = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(1)).current;
@@ -35,11 +39,11 @@ export function CharacterActor({ instance, sceneWidth, doorStandX, laneBottom, o
     // A subtle "excited walk" bounce.
     return Animated.loop(
       Animated.sequence([
-        Animated.timing(bounce, { toValue: 1, duration: 260, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
-        Animated.timing(bounce, { toValue: 0, duration: 260, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+        Animated.timing(bounce, { toValue: 1, duration: 260, easing: Easing.inOut(Easing.quad), useNativeDriver }),
+        Animated.timing(bounce, { toValue: 0, duration: 260, easing: Easing.inOut(Easing.quad), useNativeDriver }),
       ])
     );
-  }, [bounce]);
+  }, [bounce, useNativeDriver]);
 
   useEffect(() => {
     let cancelled = false;
@@ -62,7 +66,7 @@ export function CharacterActor({ instance, sceneWidth, doorStandX, laneBottom, o
           toValue: doorStandX,
           duration: 1100,
           easing: Easing.out(Easing.cubic),
-          useNativeDriver: true,
+          useNativeDriver,
         }).start(() => {
           bounceAnim.stop();
           bounce.setValue(0);
@@ -74,9 +78,9 @@ export function CharacterActor({ instance, sceneWidth, doorStandX, laneBottom, o
       new Promise<void>((resolve) => {
         setPhaseSafe('inside');
         Animated.sequence([
-          Animated.timing(opacity, { toValue: 0, duration: 180, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+          Animated.timing(opacity, { toValue: 0, duration: 180, easing: Easing.inOut(Easing.quad), useNativeDriver }),
           Animated.delay(320),
-          Animated.timing(opacity, { toValue: 1, duration: 180, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+          Animated.timing(opacity, { toValue: 1, duration: 180, easing: Easing.inOut(Easing.quad), useNativeDriver }),
         ]).start(() => resolve());
       });
 
@@ -88,7 +92,7 @@ export function CharacterActor({ instance, sceneWidth, doorStandX, laneBottom, o
           toValue: endRightX,
           duration: 1400,
           easing: Easing.in(Easing.cubic),
-          useNativeDriver: true,
+          useNativeDriver,
         }).start(() => {
           bounceAnim.stop();
           bounce.setValue(0);
